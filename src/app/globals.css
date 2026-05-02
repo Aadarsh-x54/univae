@@ -1,26 +1,447 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ============================================
+   UNIVAE — "Cosmic Infinity" Design System
+   ============================================ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: #03020a;
+  --color-foreground: #FFFFFF;
+  --color-surface: #0c0a1a;
+  --color-surface-elevated: #120f2a;
+  --color-sidebar: #08061a;
+  --color-border: rgba(139, 92, 246, 0.08);
+  --color-border-glow: rgba(139, 92, 246, 0.3);
+
+  --color-accent-indigo: #818CF8;
+  --color-accent-purple: #A78BFA;
+  --color-accent-magenta: #E879F9;
+  --color-accent-cyan: #67E8F9;
+  --color-accent-saffron: #FBBF24;
+  --color-accent-nebula: #C084FC;
+  --color-accent-stellar: #38BDF8;
+  --color-accent-aurora: #34D399;
+
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #E0E7FF;
+  --color-text-muted: #A5B4FC;
+  --color-text-dim: #6366F1;
+
+  --font-sans: var(--font-inter);
+
+  /* Animations */
+  --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-slide-up: slide-up 0.5s ease-out;
+  --animate-slide-in-left: slide-in-left 0.3s ease-out;
+  --animate-typing-dot: typing-dot 1.4s infinite ease-in-out;
+  --animate-cosmic-rotate: cosmic-rotate 20s linear infinite;
+  --animate-nebula-shift: nebula-shift 8s ease-in-out infinite;
+  --animate-star-twinkle: star-twinkle 3s ease-in-out infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Keyframes */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes typing-dot {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes cosmic-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes nebula-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes border-glow {
+  0%, 100% { border-color: rgba(139, 92, 246, 0.3); }
+  50% { border-color: rgba(232, 121, 249, 0.5); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+}
+
+/* ============================================
+   Base Styles — Deep Space
+   ============================================ */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #03020a;
+  color: #FFFFFF;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Starfield noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* Cosmic ambient glow */
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(232, 121, 249, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.02) 0%, transparent 40%);
+  animation: nebula-shift 20s ease-in-out infinite;
+}
+
+/* ============================================
+   Glass & Glow Utilities — Cosmic Edition
+   ============================================ */
+.glass {
+  background: rgba(139, 92, 246, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.08);
+}
+
+.glass-strong {
+  background: rgba(139, 92, 246, 0.06);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(139, 92, 246, 0.12);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.06) 0%, rgba(232, 121, 249, 0.02) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(232, 121, 249, 0.04) 100%);
+  border-color: rgba(167, 139, 250, 0.25);
+  box-shadow: 
+    0 0 30px rgba(139, 92, 246, 0.1),
+    0 0 60px rgba(232, 121, 249, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: translateY(-3px);
+}
+
+.glow-indigo {
+  box-shadow: 0 0 20px rgba(129, 140, 248, 0.3), 0 0 60px rgba(129, 140, 248, 0.1);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px rgba(167, 139, 250, 0.3), 0 0 60px rgba(167, 139, 250, 0.1);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(103, 232, 249, 0.3), 0 0 60px rgba(103, 232, 249, 0.1);
+}
+
+.glow-saffron {
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.3), 0 0 60px rgba(251, 191, 36, 0.1);
+}
+
+.glow-text {
+  text-shadow: 0 0 20px rgba(167, 139, 250, 0.5), 0 0 40px rgba(232, 121, 249, 0.2);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #818CF8, #A78BFA, #E879F9, #67E8F9);
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-warm {
+  background: linear-gradient(135deg, #FBBF24, #E879F9, #818CF8);
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(232, 121, 249, 0.4), rgba(103, 232, 249, 0.2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ============================================
+   Custom Scrollbars — Cosmic
+   ============================================ */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.3), rgba(232, 121, 249, 0.2));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.5), rgba(232, 121, 249, 0.4));
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+}
+
+/* ============================================
+   Markdown Content Styles
+   ============================================ */
+.markdown-body {
+  color: #E0E7FF;
+  line-height: 1.75;
+  font-size: 0.9375rem;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 {
+  color: #FFFFFF;
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.markdown-body h1 { font-size: 1.5rem; }
+.markdown-body h2 { font-size: 1.25rem; }
+.markdown-body h3 { font-size: 1.125rem; }
+
+.markdown-body p {
+  margin-bottom: 1em;
+}
+
+.markdown-body code {
+  background: rgba(139, 92, 246, 0.12);
+  color: #C4B5FD;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.markdown-body pre {
+  background: rgba(3, 2, 10, 0.7) !important;
+  border: 1px solid rgba(139, 92, 246, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1em 0;
+  position: relative;
+}
+
+.markdown-body pre code {
+  background: transparent;
+  color: #E0E7FF;
+  padding: 0;
+  font-size: 0.85em;
+}
+
+.markdown-body blockquote {
+  border-left: 3px solid #A78BFA;
+  padding-left: 1em;
+  color: #A5B4FC;
+  margin: 1em 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+.markdown-body li {
+  margin-bottom: 0.25em;
+}
+
+.markdown-body a {
+  color: #C4B5FD;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(196, 181, 253, 0.3);
+  transition: all 0.2s;
+}
+
+.markdown-body a:hover {
+  color: #E879F9;
+  border-bottom-color: #E879F9;
+}
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid rgba(139, 92, 246, 0.1);
+  padding: 0.5em 1em;
+  text-align: left;
+}
+
+.markdown-body th {
+  background: rgba(139, 92, 246, 0.1);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid rgba(139, 92, 246, 0.1);
+  margin: 2em 0;
+}
+
+/* KaTeX */
+.katex-display {
+  overflow-x: auto;
+  padding: 0.5em 0;
+}
+
+/* Highlight.js theme override */
+.hljs {
+  background: transparent !important;
+  color: #E0E7FF !important;
+}
+
+/* ============================================
+   Button Styles — Cosmic
+   ============================================ */
+.btn-primary {
+  background: linear-gradient(135deg, #7C3AED, #A855F7, #E879F9);
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease-in-out infinite;
+  color: white;
+  padding: 0.625rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 0 25px rgba(167, 139, 250, 0.4), 
+    0 0 50px rgba(232, 121, 249, 0.2),
+    0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: rgba(139, 92, 246, 0.08);
+  color: #E0E7FF;
+  padding: 0.625rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+.btn-secondary:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(167, 139, 250, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+}
+
+/* ============================================
+   Selection Styles
+   ============================================ */
+::selection {
+  background: rgba(167, 139, 250, 0.3);
+  color: #FFFFFF;
+}
+
+::-moz-selection {
+  background: rgba(167, 139, 250, 0.3);
+  color: #FFFFFF;
 }
