@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: univae
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        value: "postgresql://<username>:<password>@<host>:5432/<db_name>"
+        preview: false
+      - key: NEXTAUTH_URL
+        value: "https://univae.onrender.com"
+        preview: false
+      - key: NEXTAUTH_SECRET
+        generateValue: true
+        preview: false
+      - key: GOOGLE_GENERATIVE_AI_API_KEY
+        value: "<your-gemini-api-key>"
+        preview: false
+    healthCheckPath: "/"
+    autoDeploy: true

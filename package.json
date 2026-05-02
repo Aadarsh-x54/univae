@@ -4,6 +4,7 @@
   "description": "Premium, local-first AI chatbot platform with cosmic aesthetics.",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
