@@ -1,6 +1,7 @@
 {
-  "name": "garud-ai",
-  "version": "0.1.0",
+  "name": "univae",
+  "version": "1.0.0",
+  "description": "Premium, local-first AI chatbot platform with cosmic aesthetics.",
   "private": true,
   "scripts": {
     "dev": "next dev",
